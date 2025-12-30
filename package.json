@@ -1,21 +1,29 @@
 {
-  "name": "llm-approve-viewer",
-  "displayName": "llm_approve_viewer",
+  "name": "llm-governance-viewer",
+  "displayName": "LLM Governance Viewer",
   "description": "Small extension for marking files allowed to used in llms",
   "version": "0.0.1",
+  "activationEvents": [
+    "workspaceContains:llm_approvements.json"
+  ],
   "engines": {
     "vscode": "^1.107.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
-    "commands": [
+    "colors": [
       {
-        "command": "llm-approve-viewer.helloWorld",
-        "title": "Hello World"
+        "id": "llmStatus.allowed",
+        "description": "Color for allowed LLM files",
+        "defaults": { "dark": "#4EC9B0", "light": "#008000", "highContrast": "#00FF00" }
+      },
+      {
+        "id": "llmStatus.denied",
+        "description": "Color for denied LLM files",
+        "defaults": { "dark": "#F14C4C", "light": "#A10000", "highContrast": "#FF0000" }
       }
     ]
   },
