@@ -1,10 +1,5 @@
 export type Status = 'allow' | 'deny';
 
-export interface RawRule {
-    Path: string;
-    Status: Status;
-}
-
 export interface Rule {
     Path: string;   // Normalized path
     Status: Status;
