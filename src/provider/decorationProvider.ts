@@ -45,17 +45,15 @@ export class LLMDecorationProvider implements vscode.FileDecorationProvider {
         // 5. Return the visual decoration based on status
         if (status === 'allow') {
             return new vscode.FileDecoration(
-                'A', // Badge text (1-2 chars)
-                'LLM: Allowed', // Tooltip
-                new vscode.ThemeColor('llmStatus.allow') // Color from package.json
+                '✅', // Badge text (1-2 chars)
+                'LLM: Allowed' // Tooltip
             );
         } 
         
         if (status === 'deny') {
             return new vscode.FileDecoration(
-                'D', // Badge text
-                'LLM: Denied', // Tooltip
-                new vscode.ThemeColor('llmStatus.deny') // Color from package.json
+                '❌', // Badge text
+                'LLM: Denied' // Tooltip
             );
         }
 

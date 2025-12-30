@@ -14,18 +14,6 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
-    "colors": [
-      {
-        "id": "llmStatus.allowed",
-        "description": "Color for allowed LLM files",
-        "defaults": { "dark": "#4EC9B0", "light": "#008000", "highContrast": "#00FF00" }
-      },
-      {
-        "id": "llmStatus.denied",
-        "description": "Color for denied LLM files",
-        "defaults": { "dark": "#F14C4C", "light": "#A10000", "highContrast": "#FF0000" }
-      }
-    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
