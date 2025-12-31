@@ -3,6 +3,10 @@
   "displayName": "LLM Governance Viewer",
   "description": "Small extension for marking files allowed to used in llms",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jtstrs/llm_appr_ext.git"
+  },
   "activationEvents": [
     "workspaceContains:llm_approvements.json"
   ],
