@@ -7,6 +7,7 @@
     "type": "git",
     "url": "https://github.com/jtstrs/llm_appr_ext.git"
   },
+  "publisher": "jetstr",
   "activationEvents": [
     "workspaceContains:llm_approvements.json"
   ],
