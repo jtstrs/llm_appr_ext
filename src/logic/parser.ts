@@ -1,5 +1,5 @@
 import { Rule, ParseResult } from '../config/types';
-import { normalizePath } from './utils';
+import { normalizePath, isGlobPattern } from './utils';
 
 export function parseRules(jsonString: string): ParseResult {
     const result: ParseResult = {
@@ -42,19 +42,21 @@ export function parseRules(jsonString: string): ParseResult {
         }
 
         const normPath = normalizePath(item.Path);
-        
-        // Conflict Detection
-        if (pathSeen.has(normPath)) {
+        const isGlob = isGlobPattern(normPath);
+
+        // Conflict Detection (skip for glob patterns - overlapping globs are expected)
+        if (!isGlob && pathSeen.has(normPath)) {
             const previousIndex = pathSeen.get(normPath);
             result.warnings.push(`Duplicate path detected: "${normPath}". Rule at index ${index} overrides rule at index ${previousIndex}.`);
         }
-        
+
         pathSeen.set(normPath, index);
 
         const rule: Rule = {
             Path: normPath,
             Status: statusLower as 'allow' | 'deny',
-            index: index
+            index: index,
+            isGlob: isGlob
         };
 
         result.rules.push(rule);

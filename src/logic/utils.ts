@@ -5,8 +5,8 @@
  * - Removes trailing '/'.
  */
 export function normalizePath(p: string): string {
-    if (!p) return '';
-    
+    if (!p) {return '';}
+
     // 1. Replace Windows backslashes
     let normalized = p.replace(/\\/g, '/');
 
@@ -17,4 +17,12 @@ export function normalizePath(p: string): string {
     normalized = normalized.replace(/\/$/, '');
 
     return normalized;
+}
+
+/**
+ * Detects if a path string contains glob pattern characters.
+ * Returns true if the path contains: * ? [ {
+ */
+export function isGlobPattern(p: string): boolean {
+    return /[*?[{]/.test(p);
 }

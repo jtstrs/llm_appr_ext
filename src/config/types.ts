@@ -4,6 +4,7 @@ export interface Rule {
     Path: string;   // Normalized path
     Status: Status;
     index: number;  // Position in the JSON file (0-based)
+    isGlob: boolean; // true if Path contains glob characters (*?[{)
 }
 
 export interface ParseResult {

@@ -1,3 +1,4 @@
+import { minimatch } from 'minimatch';
 import { Rule, Status } from '../config/types';
 import { normalizePath } from './utils';
 
@@ -9,17 +10,23 @@ export function resolveStatus(targetPath: string, rules: Rule[]): Status | 'unde
     const normalizedTarget = normalizePath(targetPath);
 
     // 1. Filter: Find rules that apply to this path
-    // A rule applies if it IS the path, or if it is a PARENT of the path.
+    // A rule applies if it matches via glob pattern OR if it is a literal match/parent.
     const matches = rules.filter(r => {
+        // Glob pattern matching
+        if (r.isGlob) {
+            return minimatch(normalizedTarget, r.Path, { dot: true });
+        }
+
+        // Literal path matching
         // Exact match (e.g., Rule: "src/utils.ts" matches File: "src/utils.ts")
-        if (r.Path === normalizedTarget) return true;
+        if (r.Path === normalizedTarget) {return true;}
 
         // Parent match (e.g., Rule: "src" matches File: "src/utils.ts")
         // Check if target starts with "rule path + /"
-        if (normalizedTarget.startsWith(r.Path + '/')) return true;
+        if (normalizedTarget.startsWith(r.Path + '/')) {return true;}
 
         // Catch-all root match (empty string or matching root folder logic if needed)
-        if (r.Path === '') return true;
+        if (r.Path === '') {return true;}
 
         return false;
     });
@@ -32,7 +39,7 @@ export function resolveStatus(targetPath: string, rules: Rule[]): Status | 'unde
     matches.sort((a, b) => {
         // Primary: Length Descending (Longer path = more specific)
         const lenDiff = b.Path.length - a.Path.length;
-        if (lenDiff !== 0) return lenDiff;
+        if (lenDiff !== 0) {return lenDiff;}
 
         // Secondary: Index Descending (Later definition overrides earlier)
         return b.index - a.index;
