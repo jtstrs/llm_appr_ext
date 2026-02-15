@@ -1,18 +1,18 @@
-# LLM Governance Viewer
+# LLM Share
 
-A Visual Studio Code extension that visually indicates which files are allowed or denied for Cloud LLM usage within the VS Code File Explorer based on a configuration file.
+A Visual Studio Code extension that visually indicates which files are safe to share with cloud LLMs within the VS Code File Explorer based on a configuration file.
 
 ## Overview
 
-**Extension Name:** LLM Governance Viewer
-**Internal Name:** `llm-governance-viewer`
-**Purpose:** Provide visual indicators in the VS Code File Explorer to manage data governance and prevent unintended data leakage to Cloud LLMs.
-**Target Audience:** Developers working in strict compliance environments where sensitive data exposure to Cloud LLMs must be carefully managed.
+**Extension Name:** LLM Share
+**Internal Name:** `llm-share`
+**Purpose:** Provide visual indicators in the VS Code File Explorer showing which files can be safely shared with cloud LLMs, preventing accidental exposure of sensitive code.
+**Target Audience:** Developers who want to clearly mark which files are safe to share with AI assistants and which should remain private.
 
 ## Features
 
 - **Visual File Status Indicators:** Displays badges and tooltips in the File Explorer showing whether files are allowed or denied for LLM usage
-- **Automatic Activation:** Activates only when `llm_approvements.json` is present in your workspace
+- **Automatic Activation:** Activates only when `llm_share.json` is present in your workspace
 - **Real-Time Updates:** Watches for changes to the configuration file and updates decorations immediately
 - **Smart Path Resolution:** Handles directory inheritance with intelligent priority-based rule matching
 - **Validation & Warnings:** Provides helpful error messages for invalid configurations and duplicate rules
@@ -23,19 +23,19 @@ A Visual Studio Code extension that visually indicates which files are allowed o
 2. Open the extension directory in VS Code
 3. Run `npm install` to install dependencies
 4. Press `F5` to launch the Extension Development Host
-5. Open a workspace and create an `llm_approvements.json` file in the root
+5. Open a workspace and create an `llm_share.json` file in the root
 
 ## Activation Strategy
 
 The extension is designed to be lightweight and unobtrusive:
 
-- **Activation Trigger:** The extension only activates when `llm_approvements.json` exists in the workspace root
+- **Activation Trigger:** The extension only activates when `llm_share.json` exists in the workspace root
 - **Resource Usage:** If the file is not present, the extension remains dormant and consumes no resources
-- **VS Code API:** Uses `activationEvents: ["workspaceContains:llm_approvements.json"]`
+- **VS Code API:** Uses `activationEvents: ["workspaceContains:llm_share.json"]`
 
 ## Configuration File Schema
 
-The extension reads `llm_approvements.json` from your workspace root.
+The extension reads `llm_share.json` from your workspace root.
 
 ### JSON Format
 
@@ -117,7 +117,7 @@ Results:
 
 ### File Watcher
 
-The extension monitors `llm_approvements.json` for changes:
+The extension monitors `llm_share.json` for changes:
 
 - **On Modification:** Re-parses rules and refreshes all file explorer decorations immediately
 - **On Creation:** Loads the configuration and applies decorations
@@ -146,7 +146,7 @@ The extension uses the VS Code `FileDecorationProvider` API to render visual cue
 
 ### JSON Syntax Error
 
-If `llm_approvements.json` contains invalid JSON:
+If `llm_share.json` contains invalid JSON:
 - **Notification:** Error message displayed: *"LLM Config Error: Invalid JSON syntax."*
 - **Behavior:** Stops providing decorations until fixed
 
@@ -211,9 +211,9 @@ interface ParseResult {
 
 ### Extension Lifecycle
 
-1. **Activation:** Triggered when `llm_approvements.json` is found in workspace
+1. **Activation:** Triggered when `llm_share.json` is found in workspace
 2. **Initialization:** Registers decoration provider with VS Code
-3. **Config Loading:** Reads and parses `llm_approvements.json`
+3. **Config Loading:** Reads and parses `llm_share.json`
 4. **Rule Application:** Updates provider with parsed rules
 5. **File Watching:** Monitors config file for changes
 6. **Decoration Rendering:** VS Code calls `provideFileDecoration()` for each file in explorer
@@ -253,7 +253,7 @@ npm test
 
 ## Known Limitations
 
-- The extension only monitors the `llm_approvements.json` file in the workspace root
+- The extension only monitors the `llm_share.json` file in the workspace root
 - Decorations apply to the VS Code File Explorer only (not visible in editor tabs)
 - Maximum of one configuration file per workspace
 

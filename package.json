@@ -1,7 +1,7 @@
 {
-  "name": "llm-governance-viewer",
-  "displayName": "LLM Governance Viewer",
-  "description": "Small extension for marking files allowed to used in llms",
+  "name": "llm-share",
+  "displayName": "LLM Share",
+  "description": "Visual indicators for files safe to share with cloud LLMs",
   "version": "0.0.1",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   },
   "publisher": "jetstr",
   "activationEvents": [
-    "workspaceContains:llm_approvements.json"
+    "workspaceContains:llm_share.json"
   ],
   "engines": {
     "vscode": "^1.107.0"

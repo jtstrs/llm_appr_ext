@@ -5,7 +5,7 @@ import { LLMDecorationProvider } from './provider/decorationProvider';
 import { Rule } from './config/types';
 
 export async function activate(context: vscode.ExtensionContext) {
-    console.log('LLM Governance Viewer is active.');
+    console.log('LLM Share is active.');
 
     // 1. Initialize the Decoration Provider
     const provider = new LLMDecorationProvider();
@@ -16,7 +16,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     // 3. Helper function to load and parse the config
     const loadConfig = async () => {
-        const files = await vscode.workspace.findFiles('llm_approvements.json', '**/node_modules/**', 1);
+        const files = await vscode.workspace.findFiles('llm_share.json', '**/node_modules/**', 1);
         
         if (files.length === 0) {
             // Should not happen due to activationEvents, but good safety check
@@ -42,7 +42,7 @@ export async function activate(context: vscode.ExtensionContext) {
             provider.updateRules(result.rules);
 
         } catch (error) {
-            console.error('Failed to read llm_approvements.json', error);
+            console.error('Failed to read llm_share.json', error);
         }
     };
 
@@ -50,7 +50,7 @@ export async function activate(context: vscode.ExtensionContext) {
     await loadConfig();
 
     // 5. Watch for changes to the config file
-    const watcher = vscode.workspace.createFileSystemWatcher('**/llm_approvements.json');
+    const watcher = vscode.workspace.createFileSystemWatcher('**/llm_share.json');
     
     watcher.onDidChange(() => loadConfig());
     watcher.onDidCreate(() => loadConfig());
